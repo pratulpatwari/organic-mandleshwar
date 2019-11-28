@@ -1,0 +1,37 @@
+[{
+	"id": 1,
+	"title": "Green Vegetable",
+	"hindiName": "tamatar",
+	"englishName": "Tomato"
+},
+{
+	"id": 2,
+	"title": "Vegetable",
+	"hindiName": "gobhi",
+	"englishName": "Cauliflower"
+},
+{
+	"id": 3,
+	"title": "Vegetable",
+	"hindiName": "baingan",
+	"englishName": "Brinjal"
+},
+{
+	"id": 4,
+	"title": "Vegetable",
+	"hindiName": "pyaaj",
+	"englishName": "Onion"
+},
+{
+	"id": 5,
+	"title": "Green Vegetable",
+	"hindiName": "dhaniya",
+	"englishName": "Coriander"
+},
+{
+	"id": 6,
+	"title": "Green Vegetable",
+	"hindiName": "kakdi",
+	"englishName": "Cucumber"
+}
+]
