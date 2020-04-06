@@ -5,7 +5,7 @@ const fs = require('fs');
 const customers = '/Users/pratulpatwari/organic-veggies/data/customer.json';
 
 router.get('/accounts/:farmerId', (req, res) => {
-    console.log('Step 1. List all the customer accounts. Request by farmerId: ', `${req.params.farmerId}`);
+    console.log('List all the customer accounts. Request by farmerId: ', `${req.params.farmerId}`);
     try {
         fs.readFile(customers, (err, data) => {
             if (err) {

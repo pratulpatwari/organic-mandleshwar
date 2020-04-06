@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 require('dotenv/config');
 const path = require('path');
-
-var db = require('./private/DB.js');
+var auth = require('./private/auth.js');
 const PORT = process.env.PORT || 8000;
+const jwt = require('jsonwebtoken')
+
+const config = require('./private/config');
+
+/* set the secret configurations*/
+app.set('Secret', config.secret);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -15,12 +20,33 @@ app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/images', express.static(__dirname + '/public/images'));
 
+const protectedRoutes = express.Router();
+app.use(['/api','/farmer'], protectedRoutes);
+
+protectedRoutes.use((req,res,next) => {
+    var token = req.headers['access-token'];
+    if (token) {
+        jwt.verify(token, app.get('Secret', (err,decode) => {
+            if(err) {
+                return res.json({message: 'invalid token'});
+            } else {
+                req.decode = decode;
+            }
+        }));
+        next();
+    } else {
+        res.send({
+            message: 'No token provided'
+        });
+    }
+});
+
 // import routes. All the Rest API end points are configured in this file
 const organicRoutes = require('./routes/organic');
-app.use('/organic', organicRoutes);
+app.use('/api/organic', organicRoutes);
 
 const customerRoutes = require('./routes/customer');
-app.use('/customer', customerRoutes);
+app.use('/api/customer', customerRoutes);
 
 // Login page url
 app.get('/', (req, res) => {
@@ -35,12 +61,16 @@ app.get('/farmer', (req, res) => {
 
 // login request to validate the credentials
 app.post('/login', (req, res) => {
-    if(db.isAuthenticated(req.body.email,req.body.psw)){
+    const authenticate = auth.isAuthenticated(req.body.email, req.body.psw, app);
+    if (authenticate.status) {
+        console.log('Authentication is successful. Token: ', authenticate.token);
+        res.header('access-token', authenticate.token);
         res.redirect('/farmer');
     } else {
-        res.status(200).send('Invalid Email or Password !');
+        console.error('Authentication was not successful: ', authenticate.message);
+        res.status(401).send('Invalid Email or Password !');
     }
-    
+
 });
 
 // port name to which express will listen

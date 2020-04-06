@@ -1,5 +1,6 @@
 const availableVegetables = '/Users/pratulpatwari/organic-veggies/data/available.json';
 const allVegetables = '/Users/pratulpatwari/organic-veggies/data/vegetables.json';
+
 /*
     DB call to save the available vegetables.
     1. Called when farmers update the vegetables available tomorrow.
@@ -46,18 +47,8 @@ async function readAllVegetables() {
     });
 };
 
-const isAuthenticated = (username, password) => {
-    if (username === 'pratul.patwari@gmail.com') {
-        if (password === '123') {
-            return true;
-        }
-    }
-    return false;
-};
-
 module.exports = {
                     saveAvailableVegetables,
                     readAvailableVegetables,
-                    readAllVegetables,
-                    isAuthenticated
+                    readAllVegetables
                 };

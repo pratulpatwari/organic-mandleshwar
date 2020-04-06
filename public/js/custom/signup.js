@@ -17,12 +17,3 @@ $('#signup-cancel').on('click', function () {
     $('#signup-password').val(''); 
 });
 
-createUser = async (email, password) => {
-    try {
-        const credentials = await auth.createUserWithEmailAndPassword(email, password);
-        return credentials.user;
-    } catch (error) {
-        console.error("Error while signing up the user: " + email + ". Error message: ", error.message);
-        return undefined;
-    }
-}

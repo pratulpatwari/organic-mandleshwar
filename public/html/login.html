@@ -26,7 +26,10 @@
 
             <button type="submit" class="login-btn">Login</button>
 
-            <a class="btn btn-outline-dark" data-toggle="modal" href='#modal-signup'>Sign up</a>
+            <div>
+                <a class="btn btn-outline-dark" data-toggle="modal" href='#modal-signup'>Sign up</a>
+            </div>
+            
         </form>
     </div>
 
@@ -54,43 +57,12 @@
         </div>
     </div>
 
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
-
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyDsp3k9kzGYtVv4uXtdz0uB30Cexfwuffs",
-            authDomain: "organic-veggies.firebaseapp.com",
-            databaseURL: "https://organic-veggies.firebaseio.com",
-            projectId: "organic-veggies",
-            //storageBucket: "organic-veggies.appspot.com",
-            //messagingSenderId: "892936757043",
-            appId: "1:892936757043:web:1324fe3c7e0fc099a16846",
-            measurementId: "G-WCRTCNYQRK"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
-
-        // make auth and firestore references
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-    </script>
-
     <!-- jQuery -->
     <script src="../js/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
     <!-- custom script -->
-    <script src="../js/custom/auth.js"></script>
+    <!-- <script src="../js/custom/main.js"></script> -->
 </body>
 
 </html>
