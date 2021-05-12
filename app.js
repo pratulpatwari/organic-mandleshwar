@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv/config');
 const path = require('path');
-var auth = require('./private/auth.js');
+const auth = require('./private/auth.js');
 const PORT = process.env.PORT || 8000;
 const jwt = require('jsonwebtoken')
 
@@ -24,7 +24,7 @@ const protectedRoutes = express.Router();
 app.use(['/api','/farmer'], protectedRoutes);
 
 protectedRoutes.use((req,res,next) => {
-    var token = req.headers['access-token'];
+    const token = req.headers['Authorization'].replace('Bearer ', '');
     if (token) {
         jwt.verify(token, app.get('Secret', (err,decode) => {
             if(err) {
@@ -64,7 +64,7 @@ app.post('/login', (req, res) => {
     const authenticate = auth.isAuthenticated(req.body.email, req.body.psw, app);
     if (authenticate.status) {
         console.log('Authentication is successful. Token: ', authenticate.token);
-        res.header('access-token', authenticate.token);
+        res.setHeader('Authorization', 'Bearer '+ authenticate.token);
         res.redirect('/farmer');
     } else {
         console.error('Authentication was not successful: ', authenticate.message);
