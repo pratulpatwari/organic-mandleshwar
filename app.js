@@ -5,15 +5,12 @@ const path = require('path');
 const auth = require('./private/auth.js');
 const PORT = process.env.PORT || 8000;
 const jwt = require('jsonwebtoken')
+const axios = require('axios');
 
 const config = require('./private/config');
 
 /* set the secret configurations*/
 app.set('Secret', config.secret);
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }))
 
 // static content
 app.use(express.static('public'));
@@ -24,7 +21,7 @@ const protectedRoutes = express.Router();
 app.use(['/api','/farmer'], protectedRoutes);
 
 protectedRoutes.use((req,res,next) => {
-    const token = req.headers['Authorization'].replace('Bearer ', '');
+    const token = req.headers['Authorization'];
     if (token) {
         jwt.verify(token, app.get('Secret', (err,decode) => {
             if(err) {
@@ -64,8 +61,8 @@ app.post('/login', (req, res) => {
     const authenticate = auth.isAuthenticated(req.body.email, req.body.psw, app);
     if (authenticate.status) {
         console.log('Authentication is successful. Token: ', authenticate.token);
-        res.setHeader('Authorization', 'Bearer '+ authenticate.token);
-        res.redirect('/farmer');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${authenticate.token}`
+        return axios.get("/farmer");
     } else {
         console.error('Authentication was not successful: ', authenticate.message);
         res.status(401).send('Invalid Email or Password !');
